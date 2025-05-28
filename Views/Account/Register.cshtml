@@ -1,0 +1,93 @@
+@model Sinapse.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Cadastrar";
+    Layout = "_LayoutAuth";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/auth.css" />
+}
+
+<div class="min-vh-100 d-flex align-items-center justify-content-center py-5">
+    <div class="col-11 col-sm-8 col-md-6 col-lg-4">
+        <div class="text-center mb-4">
+            <a asp-controller="Home" asp-action="Index" class="text-decoration-none">
+                <h1 class="display-4 fw-bold text-white mb-3">
+                    <i class="bi bi-brain me-2"></i>Sinapse
+                </h1>
+            </a>
+            <p class="text-secondary">
+                Se você já tem uma conta,
+                <a asp-action="Login" asp-route-returnUrl="@ViewData["ReturnUrl"]" class="text-orange text-decoration-none">
+                    entre aqui!
+                </a>
+            </p>
+        </div>
+
+        <div class="card bg-dark border-secondary">
+            <div class="card-body p-4">
+                <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+                    <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label text-white"></label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-secondary text-secondary">
+                                <i class="bi bi-person"></i>
+                            </span>
+                            <input asp-for="Name" class="form-control bg-dark border-secondary text-white" 
+                                   placeholder="Digite seu nome completo" />
+                        </div>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label text-white"></label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-secondary text-secondary">
+                                <i class="bi bi-envelope"></i>
+                            </span>
+                            <input asp-for="Email" class="form-control bg-dark border-secondary text-white" 
+                                   placeholder="Entre com seu endereço de email" />
+                        </div>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Password" class="form-label text-white"></label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-secondary text-secondary">
+                                <i class="bi bi-lock"></i>
+                            </span>
+                            <input asp-for="Password" class="form-control bg-dark border-secondary text-white" 
+                                   placeholder="Digite sua senha" />
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                        <div class="form-text text-secondary">A senha deve ter pelo menos 6 caracteres</div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="ConfirmPassword" class="form-label text-white"></label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-secondary text-secondary">
+                                <i class="bi bi-lock"></i>
+                            </span>
+                            <input asp-for="ConfirmPassword" class="form-control bg-dark border-secondary text-white" 
+                                   placeholder="Confirme sua senha" />
+                        </div>
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-orange w-100 py-2">
+                        Cadastrar
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+} 

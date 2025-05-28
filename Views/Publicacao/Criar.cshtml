@@ -1,0 +1,96 @@
+@model Sinapse.ViewModels.CreatePostViewModel
+
+@{
+    ViewData["Title"] = "Nova Publicação";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm rounded-4">
+                <div class="card-body p-4">
+                    <form asp-action="Criar" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        
+                        <div class="d-flex gap-3">
+                            <img src="@(User?.FindFirst("ProfilePhotoUrl")?.Value ?? "/images/default-avatar.png")" 
+                                 class="rounded-circle" alt="Seu avatar" width="48" height="48">
+                            
+                            <div class="flex-grow-1">
+                                <!-- Campo de texto -->
+                                <div class="form-floating mb-3">
+                                    <textarea asp-for="Content" class="form-control bg-light border-0" 
+                                             style="height: 120px" placeholder=" "></textarea>
+                                    <label asp-for="Content"></label>
+                                    <span asp-validation-for="Content" class="text-danger"></span>
+                                </div>
+
+                                <!-- Preview da imagem -->
+                                <div id="imagePreview" class="mb-3 d-none">
+                                    <img src="" alt="Preview" class="img-fluid rounded" style="max-height: 200px">
+                                    <button type="button" class="btn btn-sm btn-danger position-absolute" 
+                                            onclick="removeImage()" style="top: 10px; right: 10px;">
+                                        <i class="bi bi-x"></i>
+                                    </button>
+                                </div>
+
+                                <!-- Seleção de comunidade -->
+                                <div class="mb-3">
+                                    <select asp-for="CommunityId" class="form-select bg-light border-0" 
+                                            asp-items="ViewBag.Communities">
+                                        <option value="">-- Publicar no feed geral --</option>
+                                    </select>
+                                </div>
+
+                                <!-- Botões de ação -->
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex gap-2">
+                                        <label class="btn btn-light rounded-pill" title="Adicionar imagem">
+                                            <i class="bi bi-image me-2"></i>Imagem
+                                            <input type="file" asp-for="Image" class="d-none" 
+                                                   accept="image/*" onchange="previewImage(this)">
+                                        </label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary rounded-pill px-4">
+                                        <i class="bi bi-send-fill me-2"></i>Publicar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function previewImage(input) {
+            const preview = document.getElementById('imagePreview');
+            const previewImg = preview.querySelector('img');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    preview.classList.remove('d-none');
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        
+        function removeImage() {
+            const input = document.querySelector('input[type="file"]');
+            const preview = document.getElementById('imagePreview');
+            
+            input.value = '';
+            preview.classList.add('d-none');
+            preview.querySelector('img').src = '';
+        }
+    </script>
+    
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} 

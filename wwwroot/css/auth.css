@@ -1,0 +1,71 @@
+/* Estilos para as páginas de autenticação */
+.btn-orange {
+    background-color: #ff6b00;
+    border-color: #ff6b00;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-orange:hover {
+    background-color: #ff8533;
+    border-color: #ff8533;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 107, 0, 0.4);
+}
+
+.text-orange {
+    color: #ff6b00 !important;
+    transition: color 0.3s ease;
+}
+
+.text-orange:hover {
+    color: #ff8533 !important;
+}
+
+.form-control:focus, .form-check-input:focus {
+    border-color: #ff6b00;
+    box-shadow: 0 0 0 0.25rem rgba(255, 107, 0, 0.25);
+}
+
+.form-check-input:checked {
+    background-color: #ff6b00;
+    border-color: #ff6b00;
+}
+
+/* Estilos para inputs escuros */
+.form-control.bg-dark::placeholder {
+    color: #6c757d;
+}
+
+.form-control.bg-dark:focus {
+    background-color: #212529;
+    color: white;
+}
+
+/* Efeitos de hover nos inputs */
+.input-group:hover .input-group-text,
+.input-group:hover .form-control {
+    border-color: #ff6b00;
+}
+
+/* Animação do card */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Efeito de brilho no logo */
+.bi-brain {
+    color: #ff6b00;
+    transition: all 0.3s ease;
+}
+
+a:hover .bi-brain {
+    color: #ff8533;
+    text-shadow: 0 0 10px rgba(255, 107, 0, 0.5);
+} 

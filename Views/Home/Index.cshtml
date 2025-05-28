@@ -1,0 +1,203 @@
+﻿@model IEnumerable<Sinapse.Models.Post>
+@{
+    ViewData["Title"] = "Feed";
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <!-- Feed Principal -->
+        <div class="col-md-8">
+            <!-- Área de Criar Post -->
+            <div class="card shadow-sm rounded-4 mb-4">
+                <div class="card-body p-4">
+                    <div class="d-flex gap-3">
+                        @if (User?.Identity?.IsAuthenticated == true)
+                        {
+                            <img src="@(User?.FindFirst("ProfilePhotoUrl")?.Value ?? "/images/default-avatar.png")" 
+                                 class="rounded-circle" alt="Seu avatar" width="48" height="48">
+                            <div class="flex-grow-1">
+                                <a asp-action="Criar" asp-controller="Publicacao" 
+                                   class="form-control bg-light border-0 text-muted d-flex align-items-center px-3"
+                                   style="height: 48px; text-decoration: none;">
+                                    <i class="bi bi-pencil me-2"></i>
+                                    O que você está pensando?
+                                </a>
+                                <div class="d-flex justify-content-between mt-3">
+                                    <button class="btn btn-light rounded-pill" onclick="window.location='@Url.Action("Criar", "Publicacao")'">
+                                        <i class="bi bi-image me-2"></i>Imagem
+                                    </button>
+                                    <button class="btn btn-primary rounded-pill px-4" onclick="window.location='@Url.Action("Criar", "Publicacao")'">
+                                        <i class="bi bi-send-fill me-2"></i>Criar Publicação
+                                    </button>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <a asp-controller="Account" asp-action="Login" class="btn btn-primary rounded-pill flex-grow-1">
+                                <i class="bi bi-box-arrow-in-right me-2"></i>
+                                Faça login para publicar
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feed de Posts -->
+            @foreach (var publicacao in Model)
+            {
+                <div class="card shadow-sm mb-4 rounded-4">
+                    <div class="card-body p-4">
+                        <!-- Cabeçalho com Informações do Usuário -->
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="d-flex align-items-center">
+                                <img src="@(publicacao.User?.ProfilePhotoUrl ?? "/images/default-avatar.png")" 
+                                     class="rounded-circle me-2" width="40" height="40" alt="Foto de perfil">
+                                <div>
+                                    <h6 class="mb-0">@(publicacao.User?.Name ?? "Usuário")</h6>
+                                    <small class="text-muted">@publicacao.CreatedAt.ToString("dd/MM/yyyy HH:mm")</small>
+                                </div>
+                            </div>
+                            
+                            @if (User?.Identity?.IsAuthenticated == true && User?.Identity?.Name == publicacao.User?.UserName)
+                            {
+                                <div class="dropdown">
+                                    <button class="btn btn-sm text-muted border-0 bg-transparent p-0" data-bs-toggle="dropdown">
+                                        <i class="bi bi-three-dots"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li>
+                                            <a asp-action="Editar" asp-controller="Publicacao" 
+                                               asp-route-id="@publicacao.PostId" class="dropdown-item">
+                                                <i class="bi bi-pencil me-2"></i>Editar
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a asp-action="Excluir" asp-controller="Publicacao" 
+                                               asp-route-id="@publicacao.PostId" class="dropdown-item text-danger">
+                                                <i class="bi bi-trash me-2"></i>Excluir
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            }
+                        </div>
+
+                        <!-- Conteúdo do Post -->
+                        <p class="mb-3">@publicacao.Content</p>
+
+                        @if (!string.IsNullOrEmpty(publicacao.ImageFileName))
+                        {
+                            <div class="mb-3">
+                                <img src="/uploads/posts/@publicacao.ImageFileName" class="img-fluid rounded" alt="Imagem da publicação">
+                            </div>
+                        }
+
+                        @if (publicacao.Community != null)
+                        {
+                            <div class="mb-3">
+                                <a asp-controller="Community" asp-action="Details" asp-route-hashtag="@publicacao.Community.Hashtag"
+                                   class="badge bg-primary-subtle text-primary text-decoration-none">
+                                    #@publicacao.Community.Hashtag
+                                </a>
+                            </div>
+                        }
+
+                        <!-- Área de Interação -->
+                        <div class="border-top mt-3 pt-3">
+                            <div class="d-flex gap-4">
+                                <div class="d-flex align-items-center">
+                                    @if (User?.Identity?.IsAuthenticated == true)
+                                    {
+                                        <button onclick="curtirPublicacao(@publicacao.PostId)" 
+                                                class="btn btn-link text-decoration-none p-0 me-2 botao-curtir-@publicacao.PostId @(publicacao.Likes.Any(l => l.UserId == User?.Identity?.Name) ? "text-danger" : "text-muted")">
+                                            <i class="bi bi-heart@(publicacao.Likes.Any(l => l.UserId == User?.Identity?.Name) ? "-fill" : "") fs-5"></i>
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <a asp-controller="Account" asp-action="Login" class="btn btn-link text-decoration-none p-0 me-2 text-muted">
+                                            <i class="bi bi-heart fs-5"></i>
+                                        </a>
+                                    }
+                                    <span class="total-curtidas-@publicacao.PostId">
+                                        @if (publicacao.Likes.Count > 0)
+                                        {
+                                            <span class="text-muted small">@publicacao.Likes.Count</span>
+                                        }
+                                    </span>
+                                </div>
+
+                                <div class="d-flex align-items-center">
+                                    <a asp-controller="Publicacao" asp-action="Detalhes" asp-route-id="@publicacao.PostId" 
+                                       class="btn btn-link text-decoration-none p-0 me-2 text-muted">
+                                        <i class="bi bi-chat fs-5"></i>
+                                    </a>
+                                    @if (publicacao.Comments.Count > 0)
+                                    {
+                                        <span class="text-muted small">@publicacao.Comments.Count</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (!Model.Any())
+            {
+                <div class="text-center py-5">
+                    <i class="bi bi-newspaper display-4 text-muted"></i>
+                    <h5 class="mt-3">Nenhuma publicação ainda</h5>
+                    <p class="text-muted">Seja o primeiro a compartilhar algo!</p>
+                </div>
+            }
+        </div>
+
+        <!-- Barra Lateral -->
+        <div class="col-md-3 sticky-top" style="top: 80px;">
+            <div class="card shadow-sm rounded-4">
+                <div class="card-body p-4">
+                    <h6 class="card-title mb-3">Comunidades Sugeridas</h6>
+                    <p class="text-muted small">Em breve você verá sugestões de comunidades aqui.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function curtirPublicacao(postId) {
+            fetch(`/Publicacao/Curtir/${postId}`, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const botao = document.querySelector(`.botao-curtir-${postId}`);
+                const icone = botao.querySelector('i');
+                const contador = document.querySelector(`.total-curtidas-${postId}`);
+                
+                if (data.curtido) {
+                    botao.classList.remove('text-muted');
+                    botao.classList.add('text-danger');
+                    icone.classList.remove('bi-heart');
+                    icone.classList.add('bi-heart-fill');
+                } else {
+                    botao.classList.remove('text-danger');
+                    botao.classList.add('text-muted');
+                    icone.classList.remove('bi-heart-fill');
+                    icone.classList.add('bi-heart');
+                }
+                
+                contador.innerHTML = data.totalCurtidas > 0 ? 
+                    `<span class="text-muted small">${data.totalCurtidas}</span>` : '';
+            })
+            .catch(error => console.error('Erro ao curtir:', error));
+        }
+    </script>
+}

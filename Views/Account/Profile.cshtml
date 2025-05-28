@@ -1,0 +1,181 @@
+@{
+    ViewData["Title"] = "Meu Perfil";
+}
+
+<div class="container py-4">
+    <!-- Profile Header -->
+    <div class="card border-0 mb-4" id="profile-header">
+        <div class="card-body">
+            <div class="row">
+                <!-- Foto de Perfil -->
+                <div class="col-md-3 d-flex justify-content-center mb-3 mb-md-0">
+                    <img src="~/Imagens/Profile-photo.jpg" class="rounded-circle img-thumbnail" style="width: 150px; height: 150px; object-fit: cover;" alt="Foto de Perfil">
+                </div>
+                
+                <!-- Informações do Perfil -->
+                <div class="col-md-9">
+                    <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center mb-4 justify-content-between">
+                        <h2 class="mb-3 mb-md-0">Ana Oliveira</h2>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-link text-dark p-0 border-0" id="edit-profile" title="Editar Perfil">
+                                <i class="bi bi-pencil-square fs-5"></i>
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm d-none" id="skill-swap">
+                                <i class="bi bi-arrow-left-right me-2"></i>Conectar para SkillSwap
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Estatísticas -->
+                    <div class="row mb-3 text-center text-md-start">
+                        <div class="col-4">
+                            <div class="p-2">
+                                <h4 class="mb-0">45</h4>
+                                <small class="text-muted">Posts</small>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-2">
+                                <h4 class="mb-0">128</h4>
+                                <small class="text-muted">Conexões</small>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-2">
+                                <h4 class="mb-0">23</h4>
+                                <small class="text-muted">SkillSwaps</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bio -->
+                    <p class="text-muted mb-3">
+                        Desenvolvedora Full Stack apaixonada por tecnologia e inovação. Sempre em busca de novos desafios e oportunidades para compartilhar conhecimento.
+                    </p>
+
+                    <!-- Skills -->
+                    <div class="skills-section">
+                        <div class="mb-2">
+                            <small class="text-muted me-2">Domina:</small>
+                            <span class="badge bg-success me-1">C#</span>
+                            <span class="badge bg-success me-1">JavaScript</span>
+                            <span class="badge bg-success me-1">React</span>
+                            <span class="badge bg-success me-1">SQL</span>
+                            <span class="badge bg-success">English</span>
+                        </div>
+                        <div>
+                            <small class="text-muted me-2">Quer aprender:</small>
+                            <span class="badge bg-info me-1">UX Design</span>
+                            <span class="badge bg-info me-1">Python</span>
+                            <span class="badge bg-info me-1">Spanish</span>
+                            <span class="badge bg-info">Vue.js</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feed de Posts -->
+    <div id="user-posts">
+        <h3 class="mb-4">
+            <i class="bi bi-grid-3x3 me-2"></i>Publicações
+        </h3>
+
+        <div class="row g-4">
+            <!-- Post Card 1 -->
+            <div class="col-12">
+                <div class="card border-0 border-bottom rounded-0">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <!-- Avatar -->
+                            <div class="me-3">
+                                <img src="~/Imagens/Profile-photo.jpg" class="rounded-circle" style="width: 48px; height: 48px; object-fit: cover;" alt="Avatar">
+                            </div>
+                            <!-- Conteúdo do Post -->
+                            <div class="flex-grow-1">
+                                <!-- Cabeçalho do Post -->
+                                <div class="d-flex align-items-center mb-2">
+                                    <h6 class="mb-0 me-2">Ana Oliveira</h6>
+                                    <small class="text-muted">· 2h</small>
+                                </div>
+                                <!-- Texto do Post -->
+                                <p class="mb-3">Acabei de finalizar um projeto incrível usando React e TypeScript! Adorei trabalhar com tipagem estática e os novos hooks. Quem mais está explorando essas tecnologias? 🚀</p>
+                                <!-- Hashtags -->
+                                <div class="mb-3">
+                                    <span class="badge bg-light text-dark me-1">#react</span>
+                                    <span class="badge bg-light text-dark me-1">#typescript</span>
+                                    <span class="badge bg-light text-dark">#desenvolvimento</span>
+                                </div>
+                                <!-- Ações do Post -->
+                                <div class="d-flex gap-4">
+                                    <button class="btn btn-link text-muted p-0 text-decoration-none">
+                                        <i class="bi bi-heart me-1"></i>
+                                        <small>24</small>
+                                    </button>
+                                    <button class="btn btn-link text-muted p-0 text-decoration-none">
+                                        <i class="bi bi-chat me-1"></i>
+                                        <small>8</small>
+                                    </button>
+                                    <button class="btn btn-link text-muted p-0 text-decoration-none">
+                                        <i class="bi bi-share"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Post Card 2 -->
+            <div class="col-12">
+                <div class="card border-0 border-bottom rounded-0">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <!-- Avatar -->
+                            <div class="me-3">
+                                <img src="~/Imagens/Profile-photo.jpg" class="rounded-circle" style="width: 48px; height: 48px; object-fit: cover;" alt="Avatar">
+                            </div>
+                            <!-- Conteúdo do Post -->
+                            <div class="flex-grow-1">
+                                <!-- Cabeçalho do Post -->
+                                <div class="d-flex align-items-center mb-2">
+                                    <h6 class="mb-0 me-2">Ana Oliveira</h6>
+                                    <small class="text-muted">· 1d</small>
+                                </div>
+                                <!-- Texto do Post -->
+                                <p class="mb-3">Alguém interessado em trocar conhecimentos sobre UX Design? Posso ensinar desenvolvimento web em troca! 🔄</p>
+                                <!-- Hashtags -->
+                                <div class="mb-3">
+                                    <span class="badge bg-light text-dark me-1">#uxdesign</span>
+                                    <span class="badge bg-light text-dark me-1">#webdev</span>
+                                    <span class="badge bg-light text-dark">#skillswap</span>
+                                </div>
+                                <!-- Ações do Post -->
+                                <div class="d-flex gap-4">
+                                    <button class="btn btn-link text-muted p-0 text-decoration-none">
+                                        <i class="bi bi-heart me-1"></i>
+                                        <small>15</small>
+                                    </button>
+                                    <button class="btn btn-link text-muted p-0 text-decoration-none">
+                                        <i class="bi bi-chat me-1"></i>
+                                        <small>5</small>
+                                    </button>
+                                    <button class="btn btn-link text-muted p-0 text-decoration-none">
+                                        <i class="bi bi-share"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Scripts futuros aqui
+    </script>
+} 

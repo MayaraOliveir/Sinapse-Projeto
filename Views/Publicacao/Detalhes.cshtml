@@ -1,0 +1,132 @@
+@model Sinapse.Models.Post
+
+@{
+    ViewData["Title"] = "Detalhes da Publicação";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Card da Publicação -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <!-- Cabeçalho com Informações do Usuário -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex align-items-center">
+                            <img src="@(Model.User?.ProfilePhotoUrl ?? "/images/default-avatar.png")" class="rounded-circle me-2" width="40" height="40" alt="Foto de perfil">
+                            <div>
+                                <h6 class="mb-0">@(Model.User?.Name ?? "Usuário")</h6>
+                                <small class="text-muted">@Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</small>
+                            </div>
+                        </div>
+                        
+                        @if (User?.Identity?.Name == Model.User?.UserName)
+                        {
+                            <div class="dropdown">
+                                <button class="btn btn-link text-dark" type="button" data-bs-toggle="dropdown">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" asp-action="Editar" asp-route-id="@Model.PostId">
+                                            <i class="bi bi-pencil me-2"></i>Editar
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item text-danger" asp-action="Excluir" asp-route-id="@Model.PostId">
+                                            <i class="bi bi-trash me-2"></i>Excluir
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Conteúdo da Publicação -->
+                    <p class="card-text">@Model.Content</p>
+
+                    @if (Model.CommunityId.HasValue && Model.Community != null)
+                    {
+                        <a asp-controller="Comunidade" asp-action="Detalhes" asp-route-id="@Model.CommunityId" 
+                           class="badge bg-primary text-decoration-none">
+                            @Model.Community?.Name
+                        </a>
+                    }
+
+                    <!-- Área de Interação -->
+                    <div class="border-top mt-3 pt-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="me-3">
+                                    <i class="bi bi-heart-fill text-danger"></i>
+                                    @Model.Likes.Count curtidas
+                                </span>
+                                <span>
+                                    <i class="bi bi-chat-fill text-primary"></i>
+                                    @Model.Comments.Count comentários
+                                </span>
+                            </div>
+                            @if (User?.Identity?.IsAuthenticated == true)
+                            {
+                                <div>
+                                    <form asp-action="Curtir" method="post" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@Model.PostId" />
+                                        <button type="submit" class="btn btn-sm @(Model.Likes.Any(l => l.UserId == User?.Identity?.Name) ? "btn-danger" : "btn-outline-danger")">
+                                            <i class="bi bi-heart@(Model.Likes.Any(l => l.UserId == User?.Identity?.Name) ? "-fill" : "")"></i>
+                                            Curtir
+                                        </button>
+                                    </form>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Área de Comentários -->
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="card-title mb-3">Comentários</h6>
+
+                    <!-- Formulário de Novo Comentário -->
+                    @if (User?.Identity?.IsAuthenticated == true)
+                    {
+                        <form asp-action="Comentar" method="post" class="mb-4">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="publicacaoId" value="@Model.PostId" />
+                            <div class="input-group">
+                                <input type="text" name="conteudo" class="form-control" placeholder="Escreva um comentário...">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="bi bi-send"></i>
+                                </button>
+                            </div>
+                        </form>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info mb-4">
+                            <i class="bi bi-info-circle me-2"></i>
+                            Faça <a asp-controller="Account" asp-action="Login">login</a> para comentar
+                        </div>
+                    }
+
+                    <!-- Lista de Comentários -->
+                    @foreach (var comentario in Model.Comments.OrderByDescending(c => c.CreatedAt))
+                    {
+                        <div class="d-flex mb-3">
+                            <img src="@(comentario.User?.ProfilePhotoUrl ?? "/images/default-avatar.png")" class="rounded-circle me-2" width="32" height="32" alt="Foto de perfil">
+                            <div class="flex-grow-1">
+                                <div class="bg-light rounded p-2">
+                                    <h6 class="mb-1">@(comentario.User?.Name ?? "Usuário")</h6>
+                                    <p class="mb-1">@comentario.Content</p>
+                                    <small class="text-muted">@comentario.CreatedAt.ToString("dd/MM/yyyy HH:mm")</small>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

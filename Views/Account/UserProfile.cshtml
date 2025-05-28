@@ -1,0 +1,154 @@
+@model dynamic
+@{
+    ViewData["Title"] = "Perfil do Usuário";
+    var isConnected = ViewBag.IsConnected ?? false;
+    var connectionStatus = ViewBag.ConnectionStatus ?? "not_connected";
+}
+
+<div class="container py-4">
+    <!-- Profile Header -->
+    <div class="card border-0 mb-4" id="profile-header">
+        <div class="card-body">
+            <div class="row">
+                <!-- Foto de Perfil -->
+                <div class="col-md-3 d-flex justify-content-center mb-3 mb-md-0">
+                    <img src="@Model.ProfilePhotoUrl" class="rounded-circle img-thumbnail" style="width: 150px; height: 150px; object-fit: cover;" alt="Foto de Perfil">
+                </div>
+                
+                <!-- Informações do Perfil -->
+                <div class="col-md-9">
+                    <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center mb-4 justify-content-between">
+                        <h2 class="mb-3 mb-md-0">@Model.Name</h2>
+                        <div class="d-flex gap-2 align-items-center">
+                            @if (connectionStatus == "not_connected")
+                            {
+                                <button class="btn btn-primary rounded-pill px-4" id="connect-btn">
+                                    <i class="bi bi-arrow-left-right me-2"></i>Convidar para SkillSwap
+                                </button>
+                            }
+                            else if (connectionStatus == "pending")
+                            {
+                                <span class="badge bg-warning text-dark rounded-pill">Solicitação Enviada</span>
+                            }
+                            else if (connectionStatus == "connected")
+                            {
+                                <span class="badge bg-success rounded-pill">Conectado</span>
+                                <button class="btn btn-outline-primary btn-sm rounded-pill">
+                                    <i class="bi bi-chat-dots me-2"></i>Mensagem
+                                </button>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Estatísticas -->
+                    <div class="row mb-3 text-center text-md-start">
+                        <div class="col-4">
+                            <div class="p-2">
+                                <h4 class="mb-0">@Model.PostsCount</h4>
+                                <small class="text-muted">Posts</small>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-2">
+                                <h4 class="mb-0">@Model.ConnectionsCount</h4>
+                                <small class="text-muted">Conexões</small>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-2">
+                                <h4 class="mb-0">@Model.SkillSwapsCount</h4>
+                                <small class="text-muted">SkillSwaps</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bio -->
+                    <p class="text-muted mb-3">@Model.Bio</p>
+
+                    <!-- Skills -->
+                    <div class="skills-section">
+                        <div class="mb-2">
+                            <small class="text-muted me-2">Domina:</small>
+                            @foreach (var skill in Model.TeachingSkills)
+                            {
+                                <span class="badge bg-success me-1">@skill</span>
+                            }
+                        </div>
+                        <div>
+                            <small class="text-muted me-2">Quer aprender:</small>
+                            @foreach (var skill in Model.LearningSkills)
+                            {
+                                <span class="badge bg-info me-1">@skill</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feed de Posts -->
+    <div id="user-posts">
+        <h3 class="mb-4">
+            <i class="bi bi-grid-3x3 me-2"></i>Publicações
+        </h3>
+
+        <div class="row g-4">
+            @foreach (var post in Model.Posts)
+            {
+                <div class="col-12">
+                    <div class="card border-0 border-bottom rounded-0">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <!-- Avatar -->
+                                <div class="me-3">
+                                    <img src="@Model.ProfilePhotoUrl" class="rounded-circle" style="width: 48px; height: 48px; object-fit: cover;" alt="Avatar">
+                                </div>
+                                <!-- Conteúdo do Post -->
+                                <div class="flex-grow-1">
+                                    <!-- Cabeçalho do Post -->
+                                    <div class="d-flex align-items-center mb-2">
+                                        <h6 class="mb-0 me-2">@Model.Name</h6>
+                                        <small class="text-muted">· @post.TimeAgo</small>
+                                    </div>
+                                    <!-- Texto do Post -->
+                                    <p class="mb-3">@post.Content</p>
+                                    <!-- Hashtags -->
+                                    <div class="mb-3">
+                                        @foreach (var tag in post.Tags)
+                                        {
+                                            <span class="badge bg-light text-dark me-1">#@tag</span>
+                                        }
+                                    </div>
+                                    <!-- Ações do Post -->
+                                    <div class="d-flex gap-4">
+                                        <button class="btn btn-link text-muted p-0 text-decoration-none">
+                                            <i class="bi bi-heart me-1"></i>
+                                            <small>@post.LikesCount</small>
+                                        </button>
+                                        <button class="btn btn-link text-muted p-0 text-decoration-none">
+                                            <i class="bi bi-chat me-1"></i>
+                                            <small>@post.CommentsCount</small>
+                                        </button>
+                                        <button class="btn btn-link text-muted p-0 text-decoration-none">
+                                            <i class="bi bi-share"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Scripts para interatividade futura
+        document.getElementById('connect-btn')?.addEventListener('click', function() {
+            // Lógica para enviar solicitação de conexão será implementada aqui
+        });
+    </script>
+} 

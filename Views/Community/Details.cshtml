@@ -1,0 +1,130 @@
+@{
+    ViewData["Title"] = "Comunidade";
+    var hashtag = "#" + ViewContext.RouteData.Values["hashtag"];
+}
+
+<div class="container-fluid py-4">
+    <!-- Cabeçalho da Comunidade -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 community-header">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div class="d-flex gap-4">
+                            <div class="community-icon-large rounded-4 bg-primary bg-opacity-10 p-3">
+                                <i class="bi bi-hash display-4 text-primary"></i>
+                            </div>
+                            <div>
+                                <div class="d-flex align-items-center gap-3 mb-2">
+                                    <h1 class="h2 mb-0">@hashtag</h1>
+                                    <span class="badge bg-primary-subtle text-primary rounded-pill">Tecnologia</span>
+                                </div>
+                                <p class="text-muted mb-3">Uma comunidade dedicada a compartilhar conhecimentos e experiências sobre programação.</p>
+                                <div class="d-flex gap-4 community-stats">
+                                    <div class="d-flex align-items-center">
+                                        <div class="stats-icon bg-primary bg-opacity-10 rounded-circle p-2 me-2">
+                                            <i class="bi bi-people-fill text-primary"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold">1.234</div>
+                                            <div class="text-muted small">Membros</div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <div class="stats-icon bg-primary bg-opacity-10 rounded-circle p-2 me-2">
+                                            <i class="bi bi-file-text-fill text-primary"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold">567</div>
+                                            <div class="text-muted small">Publicações</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="btn btn-outline-primary rounded-pill px-3 py-1 border-2 hover-scale btn-sm">
+                                Seguir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <!-- Coluna Central: Feed de Posts -->
+        <div class="col-lg-8">
+            <!-- Campo de Postagem -->
+            <div class="card shadow-sm rounded-4 mb-4 create-post-card">
+                <div class="card-body p-4">
+                    <div class="d-flex gap-3">
+                        <img src="https://via.placeholder.com/48" class="rounded-circle" alt="Seu avatar">
+                        <div class="flex-grow-1">
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control bg-light border-0" placeholder=" " id="postContent" style="height: 80px" data-community="@hashtag"></textarea>
+                                <label for="postContent">Compartilhe algo com a comunidade @hashtag...</label>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-light rounded-pill" title="Adicionar imagem">
+                                        <i class="bi bi-image me-2"></i>Imagem
+                                    </button>
+                                </div>
+                                <button class="btn btn-primary rounded-pill px-4" data-community="@hashtag">
+                                    <i class="bi bi-send-fill me-2"></i>Publicar em @hashtag
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Posts da Comunidade -->
+            @for (int i = 0; i < 5; i++)
+            {
+                <div class="card border-0 shadow-sm rounded-4 mb-4 post-card">
+                    <div class="card-body p-4">
+                        <div class="d-flex">
+                            <!-- Avatar -->
+                            <div class="me-3">
+                                <a asp-controller="Account" asp-action="UserProfile" asp-route-id="1" class="text-decoration-none">
+                                    <img src="https://via.placeholder.com/48" class="rounded-circle" alt="Avatar">
+                                </a>
+                            </div>
+                            <!-- Conteúdo do Post -->
+                            <div class="flex-grow-1">
+                                <!-- Cabeçalho do Post -->
+                                <div class="d-flex align-items-center mb-2">
+                                    <a asp-controller="Account" asp-action="UserProfile" asp-route-id="1" class="text-decoration-none text-dark">
+                                        <h6 class="mb-0 me-2">Ana Costa</h6>
+                                    </a>
+                                    <small class="text-muted">· Há 3 dias</small>
+                                </div>
+                                <p class="card-text mb-3">Pessoal, alguém pode me ajudar com dúvidas sobre @hashtag? Estou começando agora e gostaria de trocar experiências!</p>
+                                <div class="d-flex gap-2 mb-3">
+                                    <span class="badge bg-primary-subtle text-primary rounded-pill">@hashtag</span>
+                                    <span class="badge bg-primary-subtle text-primary rounded-pill">#iniciante</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex gap-3">
+                                        <button type="button" class="btn btn-light rounded-pill">
+                                            <i class="bi bi-heart me-2"></i>8 curtidas
+                                        </button>
+                                        <button type="button" class="btn btn-light rounded-pill">
+                                            <i class="bi bi-chat me-2"></i>Comentar
+                                        </button>
+                                    </div>
+                                    <button class="btn btn-light rounded-circle" title="Mais opções">
+                                        <i class="bi bi-three-dots"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div> 

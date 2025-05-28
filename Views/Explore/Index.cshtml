@@ -1,0 +1,109 @@
+@{
+    ViewData["Title"] = "Explorar Comunidades";
+}
+
+<div class="container">
+    <!-- Cabeçalho -->
+    <div class="row mb-4">
+        <div class="col">
+            <h1 class="display-5 mb-4">Explorar Comunidades</h1>
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <form class="row g-3">
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control" placeholder="Buscar comunidades por nome ou hashtag...">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary w-100">Buscar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categorias Populares -->
+    <div class="row mb-5">
+        <div class="col">
+            <h4 class="mb-4">Categorias Populares</h4>
+            <div class="d-flex flex-wrap gap-2">
+                <a href="#" class="btn btn-outline-primary rounded-pill">
+                    <i class="bi bi-code-slash me-2"></i>Programação
+                </a>
+                <a href="#" class="btn btn-outline-primary rounded-pill">
+                    <i class="bi bi-palette me-2"></i>Design
+                </a>
+                <a href="#" class="btn btn-outline-primary rounded-pill">
+                    <i class="bi bi-graph-up me-2"></i>Marketing
+                </a>
+                <a href="#" class="btn btn-outline-primary rounded-pill">
+                    <i class="bi bi-camera me-2"></i>Fotografia
+                </a>
+                <a href="#" class="btn btn-outline-primary rounded-pill">
+                    <i class="bi bi-music-note-beamed me-2"></i>Música
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grid de Comunidades -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @{
+            var comunidades = new[]
+            {
+                new { Nome = "Python", Hashtag = "python", Membros = 1234, Posts = 567, Descricao = "Comunidade para desenvolvedores Python, desde iniciantes até experts." },
+                new { Nome = "JavaScript", Hashtag = "javascript", Membros = 2345, Posts = 890, Descricao = "Tudo sobre JavaScript, frameworks e desenvolvimento web." },
+                new { Nome = "UI/UX Design", Hashtag = "uidesign", Membros = 987, Posts = 432, Descricao = "Design de interfaces, experiência do usuário e prototipação." },
+                new { Nome = "Data Science", Hashtag = "datascience", Membros = 876, Posts = 345, Descricao = "Análise de dados, machine learning e visualização." },
+                new { Nome = "Marketing Digital", Hashtag = "marketing", Membros = 654, Posts = 234, Descricao = "Estratégias de marketing digital, SEO e redes sociais." },
+                new { Nome = "Fotografia", Hashtag = "fotografia", Membros = 543, Posts = 210, Descricao = "Técnicas de fotografia, edição e composição." }
+            };
+        }
+
+        @foreach (var comunidade in comunidades)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="card-title mb-0">@comunidade.Nome</h5>
+                            <span class="badge bg-primary">#@comunidade.Hashtag</span>
+                        </div>
+                        <p class="card-text text-muted mb-3">@comunidade.Descricao</p>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <small class="text-muted">@comunidade.Membros membros</small>
+                            <small class="text-muted">@comunidade.Posts posts</small>
+                        </div>
+                        <div class="d-grid">
+                            <a href="/comunidade/@comunidade.Hashtag" class="btn btn-outline-primary">
+                                <i class="bi bi-arrow-right-circle me-2"></i>Visitar Comunidade
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Paginação -->
+    <div class="row mt-5">
+        <div class="col">
+            <nav aria-label="Navegação de páginas">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Próxima</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div> 

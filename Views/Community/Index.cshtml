@@ -1,0 +1,306 @@
+@model dynamic
+@{
+    ViewData["Title"] = "Comunidades";
+}
+
+<div class="container py-4">
+    <!-- Cabeçalho e Busca -->
+    <div class="row mb-5">
+        <div class="col-lg-8 mx-auto text-center">
+            <h2 class="display-6 mb-4">Explore Comunidades</h2>
+            <p class="text-muted mb-5">Encontre pessoas com interesses similares e compartilhe conhecimento</p>
+            <div class="search-container">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-text border-end-0 bg-white">
+                        <i class="bi bi-search"></i>
+                    </span>
+                    <input type="text" 
+                           id="searchCommunity" 
+                           class="form-control border-start-0 ps-0" 
+                           placeholder="Buscar comunidades..."
+                           aria-label="Buscar comunidades">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categorias Populares -->
+    <div class="mb-5">
+        <div class="d-flex justify-content-center flex-wrap gap-2">
+            <button class="btn btn-outline-primary rounded-pill category-btn active" data-category="all">
+                Todas
+            </button>
+            <button class="btn btn-outline-primary rounded-pill category-btn" data-category="tech">
+                Tecnologia
+            </button>
+            <button class="btn btn-outline-primary rounded-pill category-btn" data-category="art">
+                Arte & Cultura
+            </button>
+            <button class="btn btn-outline-primary rounded-pill category-btn" data-category="gaming">
+                Games
+            </button>
+        </div>
+    </div>
+
+    <!-- Lista de Comunidades -->
+    <div class="row g-4" id="communitiesList">
+        <!-- Python -->
+        <div class="col-md-6 col-lg-4" data-community-name="python" data-category="tech">
+            <a href="/comunidade/python" class="text-decoration-none">
+                <div class="community-card card h-100 border-0 shadow-sm hover-shadow">
+                    <div class="card-body p-4">
+                        <div class="community-icon mb-3">
+                            <i class="bi bi-braces-asterisk text-primary"></i>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="card-title mb-0">
+                                <span class="text-primary">#</span>python
+                            </h5>
+                            <span class="badge bg-primary-subtle text-primary rounded-pill">2.5k posts</span>
+                        </div>
+                        <p class="card-text text-muted mb-3">
+                            Comunidade dedicada à programação Python, frameworks, bibliotecas e projetos.
+                        </p>
+                        <div class="community-stats d-flex align-items-center text-muted">
+                            <small class="me-3">
+                                <i class="bi bi-people-fill me-1"></i>
+                                1.2k membros
+                            </small>
+                            <small>
+                                <i class="bi bi-chat-fill me-1"></i>
+                                150 ativos
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- JavaScript -->
+        <div class="col-md-6 col-lg-4" data-community-name="javascript" data-category="tech">
+            <a href="/comunidade/javascript" class="text-decoration-none">
+                <div class="community-card card h-100 border-0 shadow-sm hover-shadow">
+                    <div class="card-body p-4">
+                        <div class="community-icon mb-3">
+                            <i class="bi bi-filetype-js text-warning"></i>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="card-title mb-0">
+                                <span class="text-primary">#</span>javascript
+                            </h5>
+                            <span class="badge bg-primary-subtle text-primary rounded-pill">3.1k posts</span>
+                        </div>
+                        <p class="card-text text-muted mb-3">
+                            Desenvolvimento web, Node.js, frameworks front-end e muito mais.
+                        </p>
+                        <div class="community-stats d-flex align-items-center text-muted">
+                            <small class="me-3">
+                                <i class="bi bi-people-fill me-1"></i>
+                                2.3k membros
+                            </small>
+                            <small>
+                                <i class="bi bi-chat-fill me-1"></i>
+                                280 ativos
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- C# -->
+        <div class="col-md-6 col-lg-4" data-community-name="csharp" data-category="tech">
+            <a href="/comunidade/csharp" class="text-decoration-none">
+                <div class="community-card card h-100 border-0 shadow-sm hover-shadow">
+                    <div class="card-body p-4">
+                        <div class="community-icon mb-3">
+                            <i class="bi bi-hash text-success"></i>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="card-title mb-0">
+                                <span class="text-primary">#</span>csharp
+                            </h5>
+                            <span class="badge bg-primary-subtle text-primary rounded-pill">1.8k posts</span>
+                        </div>
+                        <p class="card-text text-muted mb-3">
+                            .NET, ASP.NET Core, Xamarin e desenvolvimento Microsoft.
+                        </p>
+                        <div class="community-stats d-flex align-items-center text-muted">
+                            <small class="me-3">
+                                <i class="bi bi-people-fill me-1"></i>
+                                1.5k membros
+                            </small>
+                            <small>
+                                <i class="bi bi-chat-fill me-1"></i>
+                                120 ativos
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Música -->
+        <div class="col-md-6 col-lg-4" data-community-name="musica" data-category="art">
+            <a href="/comunidade/musica" class="text-decoration-none">
+                <div class="community-card card h-100 border-0 shadow-sm hover-shadow">
+                    <div class="card-body p-4">
+                        <div class="community-icon mb-3">
+                            <i class="bi bi-music-note-beamed text-danger"></i>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="card-title mb-0">
+                                <span class="text-primary">#</span>musica
+                            </h5>
+                            <span class="badge bg-primary-subtle text-primary rounded-pill">950 posts</span>
+                        </div>
+                        <p class="card-text text-muted mb-3">
+                            Troca de conhecimentos musicais, instrumentos e teoria musical.
+                        </p>
+                        <div class="community-stats d-flex align-items-center text-muted">
+                            <small class="me-3">
+                                <i class="bi bi-people-fill me-1"></i>
+                                800 membros
+                            </small>
+                            <small>
+                                <i class="bi bi-chat-fill me-1"></i>
+                                95 ativos
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Games -->
+        <div class="col-md-6 col-lg-4" data-community-name="games" data-category="gaming">
+            <a href="/comunidade/games" class="text-decoration-none">
+                <div class="community-card card h-100 border-0 shadow-sm hover-shadow">
+                    <div class="card-body p-4">
+                        <div class="community-icon mb-3">
+                            <i class="bi bi-controller text-info"></i>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="card-title mb-0">
+                                <span class="text-primary">#</span>games
+                            </h5>
+                            <span class="badge bg-primary-subtle text-primary rounded-pill">1.2k posts</span>
+                        </div>
+                        <p class="card-text text-muted mb-3">
+                            Desenvolvimento de jogos, game design e discussões sobre games.
+                        </p>
+                        <div class="community-stats d-flex align-items-center text-muted">
+                            <small class="me-3">
+                                <i class="bi bi-people-fill me-1"></i>
+                                1k membros
+                            </small>
+                            <small>
+                                <i class="bi bi-chat-fill me-1"></i>
+                                180 ativos
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Design -->
+        <div class="col-md-6 col-lg-4" data-community-name="design" data-category="art">
+            <a href="/comunidade/design" class="text-decoration-none">
+                <div class="community-card card h-100 border-0 shadow-sm hover-shadow">
+                    <div class="card-body p-4">
+                        <div class="community-icon mb-3">
+                            <i class="bi bi-palette-fill text-purple"></i>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="card-title mb-0">
+                                <span class="text-primary">#</span>design
+                            </h5>
+                            <span class="badge bg-primary-subtle text-primary rounded-pill">1.5k posts</span>
+                        </div>
+                        <p class="card-text text-muted mb-3">
+                            UI/UX, design gráfico, ferramentas e tendências de design.
+                        </p>
+                        <div class="community-stats d-flex align-items-center text-muted">
+                            <small class="me-3">
+                                <i class="bi bi-people-fill me-1"></i>
+                                1.3k membros
+                            </small>
+                            <small>
+                                <i class="bi bi-chat-fill me-1"></i>
+                                160 ativos
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Mensagem quando nenhuma comunidade for encontrada -->
+    <div id="noCommunities" class="text-center py-5 d-none">
+        <div class="empty-state">
+            <i class="bi bi-search display-1 text-muted mb-4"></i>
+            <h4 class="text-muted">Nenhuma comunidade encontrada</h4>
+            <p class="text-muted mb-4">Tente buscar com outros termos ou explore nossas categorias</p>
+            <button class="btn btn-outline-primary rounded-pill" onclick="document.getElementById('searchCommunity').value = ''; filterCommunities('');">
+                Ver todas as comunidades
+            </button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchCommunity');
+            const communitiesList = document.getElementById('communitiesList');
+            const noCommunities = document.getElementById('noCommunities');
+            const communityCards = document.querySelectorAll('[data-community-name]');
+            const categoryButtons = document.querySelectorAll('.category-btn');
+
+            function filterCommunities(searchTerm, category = 'all') {
+                let hasVisibleCommunities = false;
+                searchTerm = searchTerm.toLowerCase();
+
+                communityCards.forEach(card => {
+                    const communityName = card.getAttribute('data-community-name').toLowerCase();
+                    const communityCategory = card.getAttribute('data-category');
+                    const matchesSearch = communityName.includes(searchTerm);
+                    const matchesCategory = category === 'all' || communityCategory === category;
+
+                    if (matchesSearch && matchesCategory) {
+                        card.classList.remove('d-none');
+                        hasVisibleCommunities = true;
+                    } else {
+                        card.classList.add('d-none');
+                    }
+                });
+
+                if (hasVisibleCommunities) {
+                    noCommunities.classList.add('d-none');
+                    communitiesList.classList.remove('d-none');
+                } else {
+                    noCommunities.classList.remove('d-none');
+                    communitiesList.classList.add('d-none');
+                }
+            }
+
+            // Evento de digitação na busca
+            searchInput.addEventListener('input', function(e) {
+                const activeCategory = document.querySelector('.category-btn.active').getAttribute('data-category');
+                filterCommunities(e.target.value, activeCategory);
+            });
+
+            // Eventos dos botões de categoria
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    const category = this.getAttribute('data-category');
+                    filterCommunities(searchInput.value, category);
+                });
+            });
+        });
+    </script>
+} 
